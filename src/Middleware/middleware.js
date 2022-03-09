@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const userModel=require("../models/userModel")
 const createmidd = function(req,res,next){
 
      let token = req.headers["x-Auth-token"];
@@ -8,6 +9,7 @@ const createmidd = function(req,res,next){
     if (!token) return res.send({ status: false, msg: "token must be present" });
   next()
 }
+
 
 
 
