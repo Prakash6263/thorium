@@ -38,6 +38,33 @@ let getDistricts = async function (req, res) {
     }
 }
 
+
+let getdistrictid = async function(req,res)
+{
+    try
+    {
+        let districts=req.query.districtid
+        let date=req.query.date
+        console.log(`cosnole data:${districts} ${date}`)
+        let options=
+        {
+            method:"get",
+            url:`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id=${districts}&date=${date}`
+        }
+        let result=await axios(options);
+        console.log(result.data)
+        res.status(200).send({msg:result.data})
+    }
+    catch (err) 
+    {
+        console.log(err)
+        res.status(500).send({msg: err.message})
+    }
+}
+
+
+
+
 let getByPin = async function (req, res) {
     try {
         let pin = req.query.pincode
@@ -83,3 +110,4 @@ module.exports.getStates = getStates
 module.exports.getDistricts = getDistricts
 module.exports.getByPin = getByPin
 module.exports.getOtp = getOtp
+module.exports.getdistrictid=getdistrictid
