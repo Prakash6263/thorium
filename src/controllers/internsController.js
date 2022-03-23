@@ -75,11 +75,11 @@ const createInterns = async function (req, res) {
          }
 
         let collegeDetail = await collegeModel.findOne({ name: CollegeName, isDeleted: false });
-        console.log(collegeDetail)
-        if (!collegeDetail) return res.status(400).send({ status: false, msg: "No such college found" })
-        let { _id } = collegeDetail;
         // console.log(collegeDetail)
-        // console.log(_id )
+        if (!collegeDetail) return res.status(400).send({ status: false, msg: "No such college found" })
+         let { _id } = collegeDetail;
+        //  console.log(collegeDetail)
+        //  console.log(_id )
 
         if (!isValid(_id)) {
             res.status(400).send({ status: false, message: 'College id is required' })
@@ -92,9 +92,9 @@ const createInterns = async function (req, res) {
         }
 
         req.body["collegeId"] = _id
-        // console.log(_id)
+         console.log(_id)
         let savedIntern = await internModel.create(req.body)
-        console.log(savedIntern)
+         console.log(savedIntern)
         res.status(201).send({ status: true, data: savedIntern })
     }
     catch (err) {
@@ -110,22 +110,22 @@ const giveAllInterns = async function (req, res) {
             return
         }
         let collegeDetail = await collegeModel.findOne({ name: req.query.CollegeName, isDeleted: false })
-        console.log(collegeDetail)
+        // console.log(collegeDetail)
         if (!collegeDetail) {
             res.status(400).send({ status: false, msg: "No college found " })
             return
         }
 
         let { _id, name, fullName, logoLink } = collegeDetail
-        console.log(collegeDetail)
+        // console.log(collegeDetail)
         let allInterns = await internModel.find({ collegeId: _id, isDeleted: false }).select({ name: 1, email: 1, mobile: 1 })
-        console.log(allInterns)
+        // console.log(allInterns)
         if (allInterns.length === 0) return res.status(400).send({ status: false, msg: "no intern applied for this college" })
 
         let College = { name, fullName, logoLink, intrest: allInterns }
-        console.log(College)
+        // console.log(College)
         let ans = { data: College };
-        console.log(ans)
+        // console.log(ans)
 
         if (ans) {
             res.status(200).send(ans)
