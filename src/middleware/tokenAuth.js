@@ -6,7 +6,7 @@ const mid1 = function (req, res, next) {
         if (!token) {
             return res.status(401).send({ status: false, msg: "no authentication token" })
         } else {
-            let decodeToken = jwt.verify(token, '16th-Dec-Project-Books')
+            let decodeToken = jwt.verify(token, 'Project-Books')
             if (decodeToken) {
                 req.decodeToken = decodeToken
                 next()
