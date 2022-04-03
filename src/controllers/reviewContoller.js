@@ -1,7 +1,7 @@
 const bookModel = require("../model/bookModel")
 const reviewModel = require('../model/reviewModel')
 const mongoose = require("mongoose")
-const ObjectId = mongoose.Types.ObjectId
+// const ObjectId = mongoose.Types.ObjectId
 
 
 //======= VALIDATION ======================================================================================
@@ -147,7 +147,6 @@ module.exports.updateReview = updateReview
 
 
 const deleteReview = async (req, res) => {
-
     try {
 
         if (!(isValid(req.params.bookId) && isValidObjectId(req.params.bookId))) {
@@ -167,8 +166,8 @@ const deleteReview = async (req, res) => {
         let deletedReview = await reviewModel.findOneAndUpdate({ _id: req.params.reviewId, isDeleted: false }, { isDeleted: true })
 
         if (deletedReview) {
-            let reviewount = await reviewModel.find({ bookId: req.params.bookId, isDeleted: false }).count()
-            await bookModel.findOneAndUpdate({ _id: req.params.bookId }, { reviews: reviewount })
+            let reviewcount = await reviewModel.find({ bookId: req.params.bookId, isDeleted: false }).count()
+            await bookModel.findOneAndUpdate({ _id: req.params.bookId }, { reviews: reviewcount })
             return res.status(200).send({ status: true, msg: "review is deleted successfully" })
         } else {
             return res.status(400).send({ status: false, msg: "review not exist" })
@@ -179,6 +178,7 @@ const deleteReview = async (req, res) => {
         console.log(err)
         res.status(500).send({ status: false, error: err.message })
     }
+
 }
 
 module.exports.deleteReview = deleteReview
